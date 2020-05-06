@@ -1,6 +1,16 @@
-import { serve } from "https://deno.land/std@v0.42.0/http/server.ts";
-const s = serve({ port: 8000 });
-console.log("http://localhost:8000/");
-for await (const req of s) {
-  req.respond({ body: "Hello World\n" });
-}
+import { serve } from "https://deno.land/std@v0.22.0/http/server.ts";
+
+const { PORT = "8080" } = Deno.env();
+
+console.log("listening on", PORT);
+
+async function helloServer(){
+  for await (const req of serve(`:${PORT}`)) {
+    const enc = new TextEncoder();
+    const body = `Hello from Deno!`;
+    req.respond({ body: enc.encode(body) });
+    console.log(`${req.method} ${req.url}`)
+  }
+};
+
+helloServer();
