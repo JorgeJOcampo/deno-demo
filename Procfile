@@ -1,1 +1,1 @@
-deno run index.ts --allow-net --allow-env
+docker build -t app . && docker run -it --init -p 1993:1993 app
